@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import Ads from './pages/Ads'
 import Social from './pages/Social'
 import About from './pages/About'
+import Chatbot from './components/Chatbot'
 import './index.css'
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/social" element={<Social />} />
         <Route path="/about" element={<About />} />
       </Routes>
+      <Chatbot />
     </BrowserRouter>
   )
 }
