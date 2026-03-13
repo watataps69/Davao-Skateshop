@@ -1,0 +1,46 @@
+.shop {
+  text-align: center;
+  position: relative;
+  padding-top: 20px;
+}
+
+.shop h1 {
+  color: rgb(255, 0, 0);
+  font-size: 70px;
+  letter-spacing: 3px;
+}
+
+.shop .tagline {
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  margin-top: 5px;
+  letter-spacing: 2px;
+}
+
+.ad-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 50px 20px;
+  flex-wrap: wrap;
+}
+
+.ad-card {
+  cursor: pointer;
+  border: 1px solid #333;
+  transition: 0.3s;
+  background-color: #111;
+  width: 450px;
+}
+
+.ad-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ad-card:hover {
+  border-color: red;
+  transform: translateY(-5px);
+}

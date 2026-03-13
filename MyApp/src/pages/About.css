@@ -1,0 +1,46 @@
+.shop {
+  text-align: center;
+  position: relative;
+  padding-top: 20px;
+}
+
+.shop h1 {
+  color: rgb(255, 0, 0);
+  font-size: 70px;
+  letter-spacing: 3px;
+}
+
+.shop .tagline {
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  margin-top: 5px;
+  letter-spacing: 2px;
+}
+
+.about-section {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.about-content {
+  max-width: 700px;
+  text-align: center;
+  border: 1px solid #333;
+  padding: 40px;
+  background-color: #050505;
+}
+
+.about-content h2 {
+  color: red;
+  font-size: 30px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.about-content p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #ccc;
+}

@@ -1,0 +1,21 @@
+.navbar {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  background-color: black;
+  border-bottom: 3px solid white;
+}
+ 
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 25px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+ 
+.navbar a:hover,
+.navbar a.active {
+  color: red;
+}
+ 
