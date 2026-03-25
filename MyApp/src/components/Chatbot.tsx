@@ -1,66 +1,62 @@
 import { useState } from 'react'
 import './Chatbot.css'
 
-interface Message {
-  from: 'user' | 'bot'
-  text: string
-}
-
-const choices = [
-  { label: 'Anong oras kayo bukas?', answer: 'Bukas kami 9am-6pm! 🕘' },
-  { label: 'Paano mag-order?', answer: 'I-click ang ADD TO CART tapos CHECKOUT! 🛒' },
-  { label: 'Saan kayo located?', answer: 'Nandito kami sa Davao City! 📍' },
-]
-
 export default function Chatbot() {
-  const [open, setOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([
-    { from: 'bot', text: 'Wassup! Pano kita matulungan? 🤙' },
+  const [messages, setMessages] = useState<string[]>([
+    "Hi! How can I help you?"
   ])
+  const [input, setInput] = useState("")
 
-  function handleChoice(choice: { label: string; answer: string }) {
-    setMessages((prev) => [
-      ...prev,
-      { from: 'user', text: choice.label },
-      { from: 'bot', text: choice.answer },
-    ])
-  }
+  const suggestions = [
+    "What is this site?",
+    "How to use ads?",
+    "Tell me about social"
+  ]
 
-  function handleUnknown() {
-    setMessages((prev) => [
-      ...prev,
-      { from: 'user', text: '...' },
-      { from: 'bot', text: 'Wala ko kasabot saimo dawg 😂' },
-    ])
+  const sendMessage = (text: string) => {
+    if (!text.trim()) return
+
+    const newMessages = [...messages, "You: " + text]
+
+    let reply = "Sorry, I don't understand."
+
+    if (text.toLowerCase().includes("ads")) {
+      reply = "Ads page helps you promote things."
+    } else if (text.toLowerCase().includes("social")) {
+      reply = "Social page is for connecting people."
+    } else if (text.toLowerCase().includes("about")) {
+      reply = "This is a demo website."
+    }
+
+    setMessages([...newMessages, "Bot: " + reply])
+    setInput("")
   }
 
   return (
-    <div className="chatbot-wrapper">
-      {open && (
-        <div className="chatbot-box">
-          <div className="chatbot-header">
-            <span>Davao Skateshop 🛹</span>
-            <span className="chatbot-close" onClick={() => setOpen(false)}>&times;</span>
-          </div>
-          <div className="chatbot-messages">
-            {messages.map((msg, i) => (
-              <div key={i} className={`chatbot-msg ${msg.from}`}>
-                {msg.text}
-              </div>
-            ))}
-          </div>
-          <div className="chatbot-choices">
-            {choices.map((choice) => (
-              <button key={choice.label} onClick={() => handleChoice(choice)}>
-                {choice.label}
-              </button>
-            ))}
-            <button onClick={handleUnknown}>Iba pa</button>
-          </div>
-        </div>
-      )}
-      <div className="chatbot-toggle" onClick={() => setOpen((prev) => !prev)}>
-        💬
+    <div className="chatbot">
+      <h4>Chatbot</h4>
+
+      <div className="messages">
+        {messages.map((msg, i) => (
+          <div key={i}>{msg}</div>
+        ))}
+      </div>
+
+      <div className="suggestions">
+        {suggestions.map((s, i) => (
+          <button key={i} onClick={() => sendMessage(s)}>
+            {s}
+          </button>
+        ))}
+      </div>
+
+      <div className="input-area">
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type here..."
+        />
+        <button onClick={() => sendMessage(input)}>Send</button>
       </div>
     </div>
   )

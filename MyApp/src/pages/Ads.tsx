@@ -1,6 +1,4 @@
 import Navbar from '../components/Navbar'
-import kyonosuke from '../assets/Kyonosuke.png'
-import yuto from '../assets/Yuto.png'
 import './Ads.css'
 
 export default function Ads() {
@@ -14,10 +12,10 @@ export default function Ads() {
 
       <div className="ad-wrapper">
         <div className="ad-card" id="pro">
-          <img src={kyonosuke} alt="Skater 1" />
+          <img src="/Kyonosuke.png" alt="Skater 1" />
         </div>
         <div className="ad-card" id="pro-large">
-          <img src={yuto} alt="Skater 2" />
+          <img src="/Yuto.png" alt="Skater 2" />
         </div>
       </div>
     </>
