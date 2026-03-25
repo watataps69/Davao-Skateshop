@@ -1,63 +1,84 @@
-import { useState } from 'react'
-import './Chatbot.css'
+import { useState, useRef, useEffect } from 'react';
+
+const suggestionsList = [
+  "Hello, how are you?",
+  "What are your services?",
+  "How much is the price?",
+  "Contact support",
+  "I want to book an appointment",
+  // pwede mo idagdag pa
+];
 
 export default function Chatbot() {
-  const [messages, setMessages] = useState<string[]>([
-    "Hi! How can I help you?"
-  ])
-  const [input, setInput] = useState("")
+  const [input, setInput] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
 
-  const suggestions = [
-    "What is this site?",
-    "How to use ads?",
-    "Tell me about social"
-  ]
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const sendMessage = (text: string) => {
-    if (!text.trim()) return
-
-    const newMessages = [...messages, "You: " + text]
-
-    let reply = "Sorry, I don't understand."
-
-    if (text.toLowerCase().includes("ads")) {
-      reply = "Ads page helps you promote things."
-    } else if (text.toLowerCase().includes("social")) {
-      reply = "Social page is for connecting people."
-    } else if (text.toLowerCase().includes("about")) {
-      reply = "This is a demo website."
+  // Filter suggestions habang nagty-type
+  useEffect(() => {
+    if (input.trim().length > 0) {
+      const filtered = suggestionsList.filter(s => 
+        s.toLowerCase().includes(input.toLowerCase())
+      );
+      setFilteredSuggestions(filtered);
+      setShowSuggestions(filtered.length > 0);
+    } else {
+      setShowSuggestions(false);
     }
+  }, [input]);
 
-    setMessages([...newMessages, "Bot: " + reply])
-    setInput("")
-  }
+  const handleSelectSuggestion = (suggestion: string) => {
+    setInput(suggestion);
+    setShowSuggestions(false);
+    inputRef.current?.focus();
+  };
+
+  const handleSend = () => {
+    if (input.trim() === "") return;
+    // dito mo ilagay ang logic para i-send ang message
+    console.log("User said:", input);
+    setInput("");
+    setShowSuggestions(false);
+  };
 
   return (
-    <div className="chatbot">
-      <h4>Chatbot</h4>
+    <div className="chat-container">
+      {/* Messages area dito */}
 
-      <div className="messages">
-        {messages.map((msg, i) => (
-          <div key={i}>{msg}</div>
-        ))}
-      </div>
-
-      <div className="suggestions">
-        {suggestions.map((s, i) => (
-          <button key={i} onClick={() => sendMessage(s)}>
-            {s}
-          </button>
-        ))}
-      </div>
-
-      <div className="input-area">
+      <div className="chat-input-area relative">
         <input
+          ref={inputRef}
+          type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Type here..."
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSend();
+          }}
+          placeholder="Type your message..."
+          className="w-full p-4 border rounded-lg"
         />
-        <button onClick={() => sendMessage(input)}>Send</button>
+
+        {/* Suggestions Dropdown */}
+        {showSuggestions && (
+          <div className="absolute bottom-full left-0 w-full bg-white border rounded-lg shadow-lg max-h-60 overflow-auto z-10">
+            {filteredSuggestions.map((suggestion, index) => (
+              <div
+                key={index}
+                onClick={() => handleSelectSuggestion(suggestion)}
+                className="px-4 py-3 hover:bg-gray-100 cursor-pointer border-b last:border-none"
+              >
+                {suggestion}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <button onClick={handleSend} className="...">
+          Send
+        </button>
       </div>
     </div>
-  )
+  );
 }
